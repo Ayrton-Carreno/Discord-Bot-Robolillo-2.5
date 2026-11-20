@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Client, IntentsBitField, EmbedBuilder } = require('discord.js');
+const { Client, IntentsBitField } = require('discord.js');
 
 const client = new Client({
   intents: [
@@ -14,51 +14,31 @@ client.on('ready', (c) => {
   console.log(`✅ ${c.user.tag} is online.`);
 });
 
-client.on('interactionCreate', (interaction) => {
-  if (!interaction.isChatInputCommand()) return;
+client.on('interactionCreate', async (interaction) => {
+  try {
+    if (!interaction.isButton()) return;
+    await interaction.deferReply({ ephemeral: true });
 
-  if (interaction.commandName === 'embed') {
-    const embed = new EmbedBuilder()
-      .setTitle('Embed title')
-      .setDescription('This is an embed description')
-      .setColor('Random')
-      .addFields(
-        {
-          name: 'Field title',
-          value: 'Some random value',
-          inline: true,
-        },
-        {
-          name: '2nd Field title',
-          value: 'Some random value',
-          inline: true,
-        }
-      );
+    const role = interaction.guild.roles.cache.get(interaction.customId);
+    if (!role) {
+      interaction.editReply({
+        content: "I couldn't find that role",
+      });
+      return;
+    }
 
-    interaction.reply({ embeds: [embed] });
-  }
-});
+    const hasRole = interaction.member.roles.cache.has(role.id);
 
-client.on('messageCreate', (message) => {
-  if (message.content === 'embed') {
-    const embed = new EmbedBuilder()
-      .setTitle('Embed title')
-      .setDescription('This is an embed description')
-      .setColor('Random')
-      .addFields(
-        {
-          name: 'Field title',
-          value: 'Some random value',
-          inline: true,
-        },
-        {
-          name: '2nd Field title',
-          value: 'Some random value',
-          inline: true,
-        }
-      );
+    if (hasRole) {
+      await interaction.member.roles.remove(role);
+      await interaction.editReply(`The role ${role} has been removed.`);
+      return;
+    }
 
-    message.channel.send({ embeds: [embed] });
+    await interaction.member.roles.add(role);
+    await interaction.editReply(`The role ${role} has been added.`);
+  } catch (error) {
+    console.log(error);
   }
 });
 
