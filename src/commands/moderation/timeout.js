@@ -16,30 +16,30 @@ module.exports = {
     const mentionable = interaction.options.get('target-user').value;
     const duration = interaction.options.get('duration').value; // 1d, 1 day, 1s, 5s, 5m
     const reason =
-      interaction.options.get('reason')?.value || 'No reason provided';
+      interaction.options.get('reason')?.value || 'No se proporcionó una razón';
 
     await interaction.deferReply();
 
     const targetUser = await interaction.guild.members.fetch(mentionable);
     if (!targetUser) {
-      await interaction.editReply("That user doesn't exist in this server.");
+      await interaction.editReply('Ese usuario no existe en este servidor.');
       return;
     }
 
     if (targetUser.user.bot) {
-      await interaction.editReply("I can't timeout a bot.");
+      await interaction.editReply('No puedo aislar a un bot.');
       return;
     }
 
     const msDuration = ms(duration);
     if (isNaN(msDuration)) {
-      await interaction.editReply('Please provide a valid timeout duration.');
+      await interaction.editReply('Por favor proporciona una duración de aislamiento válida.');
       return;
     }
 
     if (msDuration < 5000 || msDuration > 2.419e9) {
       await interaction.editReply(
-        'Timeout duration cannot be less than 5 seconds or more than 28 days.'
+        'La duración del aislamiento no puede ser menor a 5 segundos ni mayor a 28 días.'
       );
       return;
     }
@@ -50,14 +50,14 @@ module.exports = {
 
     if (targetUserRolePosition >= requestUserRolePosition) {
       await interaction.editReply(
-        "You can't timeout that user because they have the same/higher role than you."
+        'No puedes aislar a ese usuario porque tiene un rol igual o superior al tuyo.'
       );
       return;
     }
 
     if (targetUserRolePosition >= botRolePosition) {
       await interaction.editReply(
-        "I can't timeout that user because they have the same/higher role than me."
+        'No puedo aislar a ese usuario porque tiene un rol igual o superior al mío.'
       );
       return;
     }
@@ -69,18 +69,18 @@ module.exports = {
       if (targetUser.isCommunicationDisabled()) {
         await targetUser.timeout(msDuration, reason);
         await interaction.editReply(
-          `${targetUser}'s timeout has been updated to ${prettyMs(msDuration, {
+          `El aislamiento de ${targetUser} se actualizó a ${prettyMs(msDuration, {
             verbose: true,
-          })}\nReason: ${reason}`
+          })}\nRazón: ${reason}`
         );
         return;
       }
 
       await targetUser.timeout(msDuration, reason);
       await interaction.editReply(
-        `${targetUser} was timed out for ${prettyMs(msDuration, {
+        `${targetUser} fue aislado por ${prettyMs(msDuration, {
           verbose: true,
-        })}.\nReason: ${reason}`
+        })}.\nRazón: ${reason}`
       );
     } catch (error) {
       console.log(`There was an error when timing out: ${error}`);

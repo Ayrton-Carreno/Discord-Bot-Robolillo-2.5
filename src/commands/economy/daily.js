@@ -14,7 +14,7 @@ module.exports = {
   callback: async (client, interaction) => {
     if (!interaction.inGuild()) {
       interaction.reply({
-        content: 'You can only run this command inside a server.',
+        content: 'Solo puedes usar este comando dentro de un servidor.',
         ephemeral: true,
       });
       return;
@@ -36,7 +36,7 @@ module.exports = {
 
         if (lastDailyDate === currentDate) {
           interaction.editReply(
-            'You have already collected your dailies today. Come back tomorrow!'
+            'Ya reclamaste tu recompensa diaria hoy. ¡Vuelve mañana!'
           );
           return;
         }
@@ -53,7 +53,7 @@ module.exports = {
       await user.save();
 
       interaction.editReply(
-        `${dailyAmount} was added to your balance. Your new balance is ${user.balance}`
+        `Se añadieron ${dailyAmount} a tu saldo. Tu nuevo saldo es ${user.balance}`
       );
     } catch (error) {
       console.log(`Error with /daily: ${error}`);

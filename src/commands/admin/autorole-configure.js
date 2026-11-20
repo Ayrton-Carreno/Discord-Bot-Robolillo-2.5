@@ -14,7 +14,7 @@ module.exports = {
    */
   callback: async (client, interaction) => {
     if (!interaction.inGuild()) {
-      interaction.reply('You can only run this command inside a server.');
+      interaction.reply('Solo puedes usar este comando dentro de un servidor.');
       return;
     }
 
@@ -28,7 +28,7 @@ module.exports = {
       if (autoRole) {
         if (autoRole.roleId === targetRoleId) {
           interaction.editReply(
-            'Auto role has already been configured for that role. To disable run `/autorole-disable`'
+            'El auto-rol ya está configurado para ese rol. Para desactivarlo usa `/autorole-disable`'
           );
           return;
         }
@@ -43,7 +43,7 @@ module.exports = {
 
       await autoRole.save();
       interaction.editReply(
-        'Autorole has now been configured. To disable run `/autorole-disable`'
+        'El auto-rol ha sido configurado. Para desactivarlo usa `/autorole-disable`'
       );
     } catch (error) {
       console.log(error);

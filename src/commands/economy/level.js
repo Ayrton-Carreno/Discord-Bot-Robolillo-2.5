@@ -16,7 +16,7 @@ module.exports = {
    */
   callback: async (client, interaction) => {
     if (!interaction.inGuild()) {
-      interaction.reply('You can only run this command inside a server.');
+      interaction.reply('Solo puedes usar este comando dentro de un servidor.');
       return;
     }
 
@@ -34,8 +34,8 @@ module.exports = {
     if (!fetchedLevel) {
       interaction.editReply(
         mentionedUserId
-          ? `${targetUserObj.user.tag} doesn't have any levels yet. Try again when they chat a little more.`
-          : "You don't have any levels yet. Chat a little more and try again."
+          ? `${targetUserObj.user.tag} todavía no tiene niveles. Inténtalo de nuevo cuando haya chateado un poco más.`
+          : 'Todavía no tienes niveles. Chatea un poco más e inténtalo de nuevo.'
       );
       return;
     }

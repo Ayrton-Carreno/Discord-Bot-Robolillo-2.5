@@ -14,20 +14,20 @@ module.exports = {
   callback: async (client, interaction) => {
     const targetUserId = interaction.options.get('target-user').value;
     const reason =
-      interaction.options.get('reason')?.value || 'No reason provided';
+      interaction.options.get('reason')?.value || 'No se proporcionó una razón';
 
     await interaction.deferReply();
 
     const targetUser = await interaction.guild.members.fetch(targetUserId);
 
     if (!targetUser) {
-      await interaction.editReply("That user doesn't exist in this server.");
+      await interaction.editReply('Ese usuario no existe en este servidor.');
       return;
     }
 
     if (targetUser.id === interaction.guild.ownerId) {
       await interaction.editReply(
-        "You can't kick that user because they're the server owner."
+        'No puedes expulsar a ese usuario porque es el dueño del servidor.'
       );
       return;
     }
@@ -38,14 +38,14 @@ module.exports = {
 
     if (targetUserRolePosition >= requestUserRolePosition) {
       await interaction.editReply(
-        "You can't kick that user because they have the same/higher role than you."
+        'No puedes expulsar a ese usuario porque tiene un rol igual o superior al tuyo.'
       );
       return;
     }
 
     if (targetUserRolePosition >= botRolePosition) {
       await interaction.editReply(
-        "I can't kick that user because they have the same/higher role than me."
+        'No puedo expulsar a ese usuario porque tiene un rol igual o superior al mío.'
       );
       return;
     }
@@ -54,7 +54,7 @@ module.exports = {
     try {
       await targetUser.kick(reason);
       await interaction.editReply(
-        `User ${targetUser} was kicked\nReason: ${reason}`
+        `El usuario ${targetUser} fue expulsado\nRazón: ${reason}`
       );
     } catch (error) {
       console.log(`There was an error when kicking: ${error}`);
