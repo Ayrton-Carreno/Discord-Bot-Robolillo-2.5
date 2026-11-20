@@ -20,6 +20,8 @@
   "homepage": "https://github.com/Ayrton-Carreno/Discord-Bot-Robolillo-2.5#readme",
   "dependencies": {
     "discord.js": "^14.28.1",
-    "dotenv": "^18.0.10"
+    "dotenv": "^18.0.10",
+    "ms": "^2.1.3",
+    "pretty-ms": "^10.0.0"
   }
 }
