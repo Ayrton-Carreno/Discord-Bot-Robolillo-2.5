@@ -158,3 +158,6 @@ vite.config.ts.timestamp-*
 
 # Bot configuration
 config.json
+
+# Binarios locales de descarga
+bin/

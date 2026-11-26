@@ -8,16 +8,16 @@ const {
 // Reemplaza estos IDs por los IDs reales de tus roles en Discord
 const roles = [
   {
-    id: 'ID_DEL_ROL_1',
-    label: 'Red',
+    id: '1530481358248612001',
+    label: 'Arbolillo',
   },
   {
-    id: 'ID_DEL_ROL_2',
-    label: 'Green',
+    id: '1400557591024894123',
+    label: 'GOAT',
   },
   {
-    id: 'ID_DEL_ROL_3',
-    label: 'Blue',
+    id: '1573252814367629372',
+    label: 'People',
   },
 ];
 
